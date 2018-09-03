@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "4e331220-c992-4635-9e94-ad813a94f183",
+		"name": "Frontend Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /recordings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/recordings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recordings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /recordings/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/recordings/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recordings",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /recordings",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"recording\": {\n\t\t\"name\": \"test\",\n\t\t\"body\": \"body\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/recordings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recordings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /recordings/1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"recording\": {\n\t\t\"name\": \"newname\",\n\t\t\"body\": \"newbody\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/recordings/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recordings",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEL /recordings/1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/recordings/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recordings",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
