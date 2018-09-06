@@ -18,13 +18,16 @@
 .individualRecord {
   display: flex;
   justify-content: space-between;
-  width: 33%;
+  width: 40%;
   margin-bottom: 2vh;
 }
 
-button {
+.viewRecording {
   border-radius: 5px;
   border: 1px solid black;
+  padding: 0 2vw;
+  text-decoration: none;
+  /* background: blue; */
 }
 
 button:hover {
