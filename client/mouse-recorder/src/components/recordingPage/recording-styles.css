@@ -1,0 +1,40 @@
+.recordingContent {
+    display: flex;
+    margin-left: 5vw;
+    margin-top: 3vw;
+}
+
+.recordingContent div {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 2vw;
+    width: 5vw;
+    text-align: center;
+}
+
+.recording {
+    background: red;
+}
+
+.play {
+    color: rgb(211,211,211);
+}
+
+/* //  When there is a recording, fade out the record button 
+// whenthere is no recording, fade out the play/delete buttons 
+
+// When recording
+// Toggle the cursor to be a red dot
+.play {
+
+}
+// make the recording button background red and text white
+// run the record mouse movemonet function
+
+// Pressing the record button toggles stlying and function
+// pressing it again saves it to the DB
+
+// pressing play replays the recording that was saved
+// pressing delete deletes the recording from teh db
+ */
+

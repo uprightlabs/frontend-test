@@ -43,9 +43,7 @@ class Home extends Component {
             value={this.state.recordingName}
             onChange={e => this.setState({ [e.target.name]: e.target.value })}
           />
-          <div className="create" onClick={() => this.submitRecording()}>
-            Create
-          </div>
+          <div className="create" onClick={() => this.submitRecording()}>Create</div>
         </div>
       </div>
     );
