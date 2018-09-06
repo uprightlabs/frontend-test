@@ -30,7 +30,7 @@
   /* background: blue; */
 }
 
-button:hover {
+.viewRecording:hover {
   background: green;
 }
 
