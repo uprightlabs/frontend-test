@@ -10,8 +10,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="navigationBar">
-          <Link to="/">Mouse Tracker</Link>
-          <Route path="/" />
+          <Link className="logo" to="/">Mouse Tracker</Link>
+          <Route path="/" /> 
+          {/* Do I need that ^ */}
         </div>
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Route } from "react-router-dom";
+// import { Route } from "react-router-dom";
 
 class Home extends Component {
   constructor() {
@@ -11,7 +11,7 @@ class Home extends Component {
     };
   }
 
-  submitRecording = () => {
+  createRecording = () => {
     this.setState({ recordingName: "" });
 
     // Add functionality to send to Database
@@ -26,9 +26,7 @@ class Home extends Component {
             {this.state.recordings.map(recording => (
               <div className="individualRecord">
                 <div>{recording}</div>
-                <Link className="viewRecording" to="/recordings/:id">
-                  View
-                </Link>
+                <Link className="viewRecording" to="/recordings/:id">View</Link>
               </div>
             ))}
           </div>
@@ -43,7 +41,7 @@ class Home extends Component {
             value={this.state.recordingName}
             onChange={e => this.setState({ [e.target.name]: e.target.value })}
           />
-          <div className="create" onClick={() => this.submitRecording()}>Create</div>
+          <div className="create" onClick={() => this.createRecording()}>Create</div>
         </div>
       </div>
     );
