@@ -7,7 +7,8 @@ class Recording extends Component {
     constructor() {
         super();
         this.state = {
-            coordinates: [],
+            xCoordinates: [],
+            yCoordinates: [],
             recording: 0
         }
     }
@@ -16,6 +17,8 @@ class Recording extends Component {
     // Toggle the record button to be red
     let element = document.getElementById("record");
     element.classList.toggle("recording");
+
+    // Check if not recording (0) or recording (1)
     if (this.state.recording === 0) {
         this.setState({ recording: 1 });
         console.log("Recording!")
@@ -23,13 +26,24 @@ class Recording extends Component {
         this.setState({ recording: 0 });
         console.log("Stop Recording!")   
     }
-        // Function for recording
+    // While recording, track cursor coordinates and send to state
         const handleMouseMove = event => {
             if (this.state.recording === 0) {
                 return null;
             } else {
-            console.log(event.pageX);
-            console.log(event.pageY);
+            // Track the x coordinates on state 
+            let newXCoordinate = this.state.xCoordinates;
+            newXCoordinate.push(event.pageX);
+            this.setState(() => ({
+                xCoordinates: [...newXCoordinate]
+            }))
+            // Track the y coordinates on state 
+            let newYCoordinate = this.state.yCoordinates;
+            newYCoordinate.push(event.pageY);
+            this.setState(() => ({
+                yCoordinates: [...newYCoordinate]
+            }))
+            console.log("Cursor Y cordinate: ", event.pageY);
         }
     }
     document.onmousemove = handleMouseMove;
@@ -40,9 +54,7 @@ class Recording extends Component {
     
     // Toggle the delete button to fade away
     let deleteElement = document.getElementById("delete"); 
-    deleteElement.classList.toggle("play")
-
-
+    deleteElement.classList.toggle("play");
 
   };
 
