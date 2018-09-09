@@ -21,7 +21,7 @@
     color: rgb(211,211,211);
 }
 
-#play, #record {
+#play, #record, #save {
     cursor: pointer;
 }
 
