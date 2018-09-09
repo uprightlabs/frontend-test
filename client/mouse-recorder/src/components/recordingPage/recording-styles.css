@@ -30,16 +30,31 @@ a {
     color: black;
 }
 
-/* 
-save to uprightDB.db
+#cursor {
+    height: 10px;
+    width: 10px;
+    background: red;
+    /* margin-left: 50%;
+    margin-top: 20%; */
+    position: absolute;
+    transition: left 1s;
+    transition: right 1s;
+}
 
-// When recording
-// Toggle the cursor to be a red dot
-// run the record mouse movemonet function
+.display {
+    display: none;
+}
+
+/* 
 
 
 // hook up DB
-// pressing record button again saves it to the DB
+Create inserts a new recording title to state
+Record button creates the x-y-cordinates on state
+save button makes a post req to mongo 
+view makes a get request to mongo
+delete makes a del request to mongo
+
 
 // When there is a recording
 // fade out the record button 
@@ -47,8 +62,7 @@ save to uprightDB.db
 // pressing delete deletes the recording from teh db
 
 
-// Delete Button
-removes the recording from the db
+// Fix buttons when recording
 
  */
 

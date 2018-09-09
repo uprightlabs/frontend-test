@@ -6,8 +6,8 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      recordings: ["hi", "hi2", "hi3"],
-      recordingName: ""
+      recordingName: "",
+      recordings: ["first", "second" ,"third"]
     };
   }
 
