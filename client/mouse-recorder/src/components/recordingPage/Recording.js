@@ -10,12 +10,12 @@ class Recording extends Component {
   constructor() {
     super();
     this.state = {
-      xCoordinates: "",
-      yCoordinates: "",
+      xCoordinates: [],
+      yCoordinates: [],
       recording: 0,
-      queriedXCoordinates: "",
-      queriedYCoordinates: "",
-      queriedRecordingTitle: "",
+      queriedXCoordinates: [],
+      queriedYCoordinates: [],
+      queriedRecordingTitle: [],
     };
   }
 
@@ -125,57 +125,105 @@ class Recording extends Component {
                 query.forEach(function(doc) {
                     x = doc.data().xCoordinates;
                     y = doc.data().yCoordinates;
+                    console.log(x, y)
                 })
-            })
-        }
-
-        // If there was a recording in the DB and it was set to state...
-        if (x.length > 0) {
-            // Toggle the record button to fade away
-            let element = document.getElementById("record");
-            element.classList.add("play");
-            
-            // Toggle the play button to fade away
-            let playElement = document.getElementById("play");
-            playElement.classList.toggle("play");
-            
-            // Toggle the save button to fade away
-            let saveElement = document.getElementById("save");
-            saveElement.classList.toggle("play");
-            
-            // Toggle the delete button to fade away
-            let deleteElement = document.getElementById("delete");
-            deleteElement.classList.toggle("play");
-            
-            // Toggle the red dot cursor to display 
-            let dot = document.getElementById("cursor");
-            dot.classList.toggle("display");
-            
-            // Test to get the default position of the record button:
-                // console.log(document.getElementById("record").getBoundingClientRect().top) 
-                // console.log(document.getElementById("record").getBoundingClientRect().left)
-            
-            // Set the default position of the dot to the record button (+/- a few pixels)
-            dot.style.left = "130px";
-            dot.style.top = "125px";
-            
-            // Iterate over the x and y coordinate arrays on state. Set the dot's position equal to the next combination
-            let i = 0;
-            let positionChange = setInterval(function() {
-                dot.style.left = x[i] + "px";
-                dot.style.top = y[i] + "px";
-                i++;
-                // When the function reaches the end of the arrays, stop the interval, then reset the formatting of the buttons.
-                if (i === x.length) {
-                    clearInterval(positionChange);
-                    element.classList.remove("play");
-                    playElement.classList.remove("play");
-                    saveElement.classList.remove("play");
-                    deleteElement.classList.remove("play");
+            }).then(() => {
+                // If there was a recording in the DB and it was set to state...
+                if (x.length > 0) {
+                    // Toggle the record button to fade away
+                    let element = document.getElementById("record");
+                    element.classList.add("play");
+                    
+                    // Toggle the play button to fade away
+                    let playElement = document.getElementById("play");
+                    playElement.classList.toggle("play");
+                    
+                    // Toggle the save button to fade away
+                    let saveElement = document.getElementById("save");
+                    saveElement.classList.toggle("play");
+                    
+                    // Toggle the delete button to fade away
+                    let deleteElement = document.getElementById("delete");
+                    deleteElement.classList.toggle("play");
+                    
+                    // Toggle the red dot cursor to display 
+                    let dot = document.getElementById("cursor");
                     dot.classList.toggle("display");
+                    
+                    // Test to get the default position of the record button:
+                        // console.log(document.getElementById("record").getBoundingClientRect().top) 
+                        // console.log(document.getElementById("record").getBoundingClientRect().left)
+                    
+                    // Set the default position of the dot to the record button (+/- a few pixels)
+                    dot.style.left = "130px";
+                    dot.style.top = "125px";
+                    
+                    // Iterate over the x and y coordinate arrays on state. Set the dot's position equal to the next combination
+                    let i = 0;
+                    let positionChange = setInterval(function() {
+                        dot.style.left = x[i] + "px";
+                        dot.style.top = y[i] + "px";
+                        i++;
+                        // When the function reaches the end of the arrays, stop the interval, then reset the formatting of the buttons.
+                        if (i === x.length) {
+                            clearInterval(positionChange);
+                            element.classList.remove("play");
+                            playElement.classList.remove("play");
+                            saveElement.classList.remove("play");
+                            deleteElement.classList.remove("play");
+                            dot.classList.toggle("display");
+                        }
+                    }, 10) // 10ms delay in between position changes so the user can watch the transition, otherwise it computes too quickly. 
                 }
-            }, 10) // 10ms delay in between position changes so the user can watch the transition, otherwise it computes too quickly. 
+            })
+        } else {
+            if (x.length > 0) {
+                // Toggle the record button to fade away
+                let element = document.getElementById("record");
+                element.classList.add("play");
+                
+                // Toggle the play button to fade away
+                let playElement = document.getElementById("play");
+                playElement.classList.toggle("play");
+                
+                // Toggle the save button to fade away
+                let saveElement = document.getElementById("save");
+                saveElement.classList.toggle("play");
+                
+                // Toggle the delete button to fade away
+                let deleteElement = document.getElementById("delete");
+                deleteElement.classList.toggle("play");
+                
+                // Toggle the red dot cursor to display 
+                let dot = document.getElementById("cursor");
+                dot.classList.toggle("display");
+                
+                // Test to get the default position of the record button:
+                    // console.log(document.getElementById("record").getBoundingClientRect().top) 
+                    // console.log(document.getElementById("record").getBoundingClientRect().left)
+                
+                // Set the default position of the dot to the record button (+/- a few pixels)
+                dot.style.left = "130px";
+                dot.style.top = "125px";
+                
+                // Iterate over the x and y coordinate arrays on state. Set the dot's position equal to the next combination
+                let i = 0;
+                let positionChange = setInterval(function() {
+                    dot.style.left = x[i] + "px";
+                    dot.style.top = y[i] + "px";
+                    i++;
+                    // When the function reaches the end of the arrays, stop the interval, then reset the formatting of the buttons.
+                    if (i === x.length) {
+                        clearInterval(positionChange);
+                        element.classList.remove("play");
+                        playElement.classList.remove("play");
+                        saveElement.classList.remove("play");
+                        deleteElement.classList.remove("play");
+                        dot.classList.toggle("display");
+                    }
+                }, 10) // 10ms delay in between position changes so the user can watch the transition, otherwise it computes too quickly. 
         }
+    }
     }
 
     saveRecording = () => {
