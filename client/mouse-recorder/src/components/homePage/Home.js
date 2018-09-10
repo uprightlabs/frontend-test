@@ -84,7 +84,7 @@ class Home extends Component {
             value={this.state.recordingTitle}
             onChange={e => this.inputValidation(e)}
           />
-          <div className="create" onClick={() => this.createRecording()}><Link to={`/viewRecording/${this.state.recordingTitle}`}>Create</Link></div>
+          <div className="create" onClick={() => this.createRecording()}>Create</div>
         </div>
       </div>
     );

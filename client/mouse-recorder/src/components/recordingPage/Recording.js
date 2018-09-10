@@ -119,7 +119,6 @@ class Recording extends Component {
         if (x.length === 0) {
             let path = this.props.location.pathname;
             let recordingPath = path.split("viewRecording/")[1];
-            console.log(recordingPath);
             db.collection("recordings").where("title", "==", recordingPath)
             .get()
             .then(query => {
