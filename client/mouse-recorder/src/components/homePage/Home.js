@@ -40,7 +40,7 @@ class Home extends Component {
       })
     })
     .then(() => this.setState({
-      recordingTitles: titles 
+      recordingTitles: titles, 
     }))
     .catch(err => console.log(err))
   }
@@ -56,10 +56,7 @@ class Home extends Component {
         .catch(function(error) {
             console.error("Error writing document: ", error);
         });
-
-    this.setState({ recordingTitle: "" });
-
-    // Add functionality to send to Database
+    // this.setState({ recordingTitle: "" });
   };
 
   render() {
@@ -84,7 +81,7 @@ class Home extends Component {
             value={this.state.recordingTitle}
             onChange={e => this.setState({ [e.target.name]: e.target.value })}
           />
-          <div className="create" onClick={() => this.createRecording()}>Create</div>
+          <div className="create" onClick={() => this.createRecording()}><Link to={`/viewRecording/${this.state.recordingTitle}`}>Create</Link></div>
         </div>
       </div>
     );

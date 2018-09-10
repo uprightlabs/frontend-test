@@ -9,8 +9,8 @@ class Recording extends Component {
   constructor() {
     super();
     this.state = {
-      xCoordinates: [],
-      yCoordinates: [],
+      xCoordinates: "",
+      yCoordinates: "",
       recording: 0,
       queriedXCoordinates: "",
       queriedYCoordinates: "",
@@ -42,25 +42,51 @@ class Recording extends Component {
             this.setState({ 
                 queriedXCoordinates: queriedX[0],
                 queriedYCoordinates: queriedY[0],
-                queriedRecordingTitle: queriedT
-            });
-        });
+                queriedRecordingTitle: queriedT,
+            })})
+        .then(() => {
+            // If no recording is retreived from DB, fade out play button.
+            document.getElementById("save").classList.add("play");
+            if (!this.state.queriedXCoordinates) {
+                console.log("There is no queried record. Do not press play");
+                document.getElementById("play").classList.add("play");
+            }
+            else console.log("There is a queried record. Press record, play, or delete")
+        })
+    }
+
+    componentDidUpdate() {
+        if (this.state.xCoordinates) {
+            document.getElementById("save").classList.remove("play")
+        }
     }
 
     toggleRecord = () => {
-        // Toggle the record button to be red
         let element = document.getElementById("record");
-        element.classList.toggle("recording");
-
+        let playElement = document.getElementById("play");
+        let saveElement = document.getElementById("save");
+        let deleteElement = document.getElementById("delete");
+        
         // Check if not recording (0) or recording (1)
+        // if not recording => set recording to 1, add display to button, fade out other buttons, begin recording
         if (this.state.recording === 0) {
-        this.setState({ recording: 1, xCoordinates: [], yCoordinates: [] });
-        console.log("Recording!");
+            this.setState({ recording: 1, xCoordinates: [], yCoordinates: [] });
+            console.log("Recording!");
+            // Toggle the record button to be red
+            element.classList.add("recording");
+            playElement.classList.add("play");
+            saveElement.classList.add("play");
+            deleteElement.classList.add("play");
         } else {
-        this.setState({ recording: 0 });
-        console.log("Stop Recording!");
+            // if recording => set recording to 0, remove display button, fade in other buttons
+            this.setState({ recording: 0 });
+            console.log("Stop Recording!");
+            element.classList.remove("recording");
+            playElement.classList.remove("play");
+            saveElement.classList.remove("play");
+            deleteElement.classList.remove("play");
         }
-
+        
         // While recording, track cursor coordinates and send to state
         const handleMouseMove = event => {
         if (this.state.recording === 0) {
@@ -70,40 +96,25 @@ class Recording extends Component {
             let newXCoordinate = this.state.xCoordinates;
             newXCoordinate.push(event.pageX);
             this.setState(() => ({
-            xCoordinates: [...newXCoordinate]
-            }));
+                xCoordinates: [...newXCoordinate]}));
+            
             // Track the y coordinates on state
             let newYCoordinate = this.state.yCoordinates;
             newYCoordinate.push(event.pageY);
             this.setState(() => ({
-            yCoordinates: [...newYCoordinate]
-            }));
-        }
-    };
-
+                yCoordinates: [...newYCoordinate]}));
+            }
+        };
         document.onmousemove = handleMouseMove;
-
-        // Toggle the play button to fade away
-        let playElement = document.getElementById("play");
-        playElement.classList.toggle("play");
-        
-        // Toggle the save button to fade away
-        let saveElement = document.getElementById("save");
-        saveElement.classList.toggle("play");
-
-        // Toggle the delete button to fade away
-        let deleteElement = document.getElementById("delete");
-        deleteElement.classList.toggle("play");
-
     };
 
     togglePlay = () => {
-        let x = this.state.xCoordinates;
-        let y = this.state.yCoordinates;
+        let qx = this.state.queriedXCoordinates;
+        let qy = this.state.queriedYCoordinates;
         // Toggle the record button to fade away
         let element = document.getElementById("record");
-        element.classList.toggle("play");
-
+        element.classList.add("play");
+        
         // Toggle the play button to fade away
         let playElement = document.getElementById("play");
         playElement.classList.toggle("play");
@@ -111,34 +122,42 @@ class Recording extends Component {
         // Toggle the save button to fade away
         let saveElement = document.getElementById("save");
         saveElement.classList.toggle("play");
-
+        
         // Toggle the delete button to fade away
         let deleteElement = document.getElementById("delete");
         deleteElement.classList.toggle("play");
-
+        
         // Toggle display on red dot div in window
         let dot = document.getElementById("cursor");
         dot.classList.toggle("display");
         console.log(document.getElementById("record").getBoundingClientRect().top, document.getElementById("record").getBoundingClientRect().left)
-        dot.style.left = "95px";
-        dot.style.top = "84px";
-
+        dot.style.left = "130px";
+        dot.style.top = "125px";
+        
         // Function to grab the recording by Id
         // iterate over x cordinates array, for each item, set the x coordintate of the div to x[i]
+        if (!this.state.xCoordinates) {
+            this.setState({
+                xCoordinates: qx,
+                yCoordinates: qy
+            })
+        }
+        let x = this.state.xCoordinates;
+        let y = this.state.yCoordinates;
+
         let i = 0;
         let positionChange = setInterval(function() {
             
             dot.style.left = x[i] + "px";
             dot.style.top = y[i] + "px";
-            console.log("x" + dot.style.left + " y" + dot.style.top);
-            
             i++;
-            if (i >= x.length) {
+            if (i === x.length) {
                 clearInterval(positionChange);
                 // toggle back the button colors
-                playElement.classList.toggle("play");
-                saveElement.classList.toggle("play");
-                deleteElement.classList.toggle("play");
+                element.classList.remove("play");
+                playElement.classList.remove("play");
+                saveElement.classList.remove("play");
+                deleteElement.classList.remove("play");
                 dot.classList.toggle("display");
             }
         }, 10)
@@ -152,21 +171,25 @@ class Recording extends Component {
             xCoordinates: this.state.xCoordinates,
             yCoordinates: this.state.yCoordinates
         })
-        .then(function() {
+        .then(() => {
             console.log("Recording successfully written!");
             document.getElementById("record").classList.remove("play")
-        })
+        }).then(() => {
+            this.setState({
+                queriedXCoordinates: this.state.xCoordinates,
+                queriedYCoordinates: this.state.yCoordinates,
+            })
+        }) 
     }
 
     deleteRecording = () => {
-        // Delete recording by Id in DB
         db.collection("recordings").doc(this.state.queriedRecordingTitle).delete()
     };
 
     render() {
      return (
         <div>
-            {/* <h3>{this}</h3> */}
+            <h3>Recording: "{this.props.location.pathname.substr(this.props.location.pathname.indexOf("/") + 15)}"</h3>
             <div className="recordingContent">
             <div id="record" onClick={() => this.toggleRecord()}>Record</div>
             <div id="play" onClick={() => this.togglePlay()}>Play</div>
