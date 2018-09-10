@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import { Route } from "react-router-dom";
 import firebase from "../../firebase";
 const db = firebase.firestore();
 
@@ -14,7 +13,8 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    let titles = []; 
+    // Fetch all recording titles from the firebase DB
+    let titles = []; // Firebase requires you to use a placeholder variable before setting values to state
     db.collection("recordings")
     .get()
     .then(function(querySnapshot) {
@@ -29,6 +29,7 @@ class Home extends Component {
   }
   
   componentDidUpdate() {
+    // When component updates, refresh the listing of recordings in real-time
     let titles = []; 
     db.collection("recordings")
     .get()
@@ -44,8 +45,9 @@ class Home extends Component {
   }
 
   inputValidation = (e) => {
-    if(this.state.recordingTitle.includes(" ")) {
-      alert("please do not use spaces");
+    // on change, check if the format of the new recording title has any illegal spaces, which would create errors with DB queries  
+    if (this.state.recordingTitle.includes(" ")) {
+      alert("Please do not use spaces when making a recording name.");
       this.setState({ [e.target.name]: "" })
     } else {
       this.setState({ [e.target.name]: e.target.value })
@@ -53,16 +55,11 @@ class Home extends Component {
   }
 
   createRecording = () => {
+    // This can only fire when the input field has been validated. Post the entry to DB.
     let recordingTitle = this.state.recordingTitle;
         db.collection("recordings").doc(`${recordingTitle}`).set({
             title: recordingTitle,
         })
-        .then(function() {
-            console.log("Recording successfully written!");
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
   };
 
   render() {

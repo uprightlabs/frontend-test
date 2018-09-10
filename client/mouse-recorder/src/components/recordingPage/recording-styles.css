@@ -48,24 +48,3 @@ h3 {
     margin-left: 5%;
 }
 
-/* 
-
-
-// hook up DB
-Create inserts a new recording title to state
-Record button creates the x-y-cordinates on state
-save button makes a post req to mongo 
-view makes a get request to mongo
-delete makes a del request to mongo
-
-
-// When there is a recording
-// fade out the record button 
-// pressing play retrieves and replays the recording that was saved
-// pressing delete deletes the recording from teh db
-
-
-// Fix buttons when recording
-
- */
-
