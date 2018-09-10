@@ -134,33 +134,49 @@ class Recording extends Component {
         dot.style.left = "130px";
         dot.style.top = "125px";
         
-        // Function to grab the recording by Id
-        // iterate over x cordinates array, for each item, set the x coordintate of the div to x[i]
-        if (!this.state.xCoordinates) {
-            this.setState({
-                xCoordinates: qx,
-                yCoordinates: qy
-            })
-        }
-        let x = this.state.xCoordinates;
-        let y = this.state.yCoordinates;
 
-        let i = 0;
-        let positionChange = setInterval(function() {
-            
-            dot.style.left = x[i] + "px";
-            dot.style.top = y[i] + "px";
-            i++;
-            if (i === x.length) {
-                clearInterval(positionChange);
-                // toggle back the button colors
-                element.classList.remove("play");
-                playElement.classList.remove("play");
-                saveElement.classList.remove("play");
-                deleteElement.classList.remove("play");
-                dot.classList.toggle("display");
-            }
-        }, 10)
+        // Get the Recording for DB, if any
+        let path = this.props.location.pathname;
+        let recordingPath = path.substr(path.indexOf("/") + 15);
+        let queriedX = "";
+        let queriedY = "";
+        db.collection("recordings").where("title", "==", recordingPath)
+        .get()
+        .then(query => {
+            query.forEach(function(doc) {
+                // .data() access all fields from the firebase DB. 
+                queriedX = doc.data().xCoordinates;
+                queriedY = doc.data().yCoordinates;
+            })
+        })
+        .then(() => {
+            this.setState({ 
+                queriedXCoordinates: queriedX,
+                queriedYCoordinates: queriedY,
+            })})
+        .then(() => {
+            // Function to grab the recording by Id
+            // iterate over x cordinates array, for each item, set the x coordintate of the div to x[i]
+            let x = this.state.queriedXCoordinates;
+            let y = this.state.queriedYCoordinates;
+            let i = 0;
+            let positionChange = setInterval(function() {
+                dot.style.left = x[i] + "px";
+                dot.style.top = y[i] + "px";
+                i++;
+                if (i === x.length) {
+                    clearInterval(positionChange);
+                    // toggle back the button colors
+                    element.classList.remove("play");
+                    playElement.classList.remove("play");
+                    saveElement.classList.remove("play");
+                    deleteElement.classList.remove("play");
+                    dot.classList.toggle("display");
+                }
+            }, 10)
+
+        })
+
     }
 
     saveRecording = () => {

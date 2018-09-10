@@ -19,7 +19,6 @@ class Home extends Component {
     .get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        // console.log(" => ", doc.data().title);
         titles.push(doc.data().title)
       })
     })
@@ -35,7 +34,6 @@ class Home extends Component {
     .get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        // console.log(" => ", doc.data().title);
         titles.push(doc.data().title)
       })
     })
@@ -56,7 +54,6 @@ class Home extends Component {
         .catch(function(error) {
             console.error("Error writing document: ", error);
         });
-    // this.setState({ recordingTitle: "" });
   };
 
   render() {
