@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
 import { Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Home from './components/homePage/Home';
 import Recording from './components/recordingPage/Recording';
 import firebase from "./firebase.js";
