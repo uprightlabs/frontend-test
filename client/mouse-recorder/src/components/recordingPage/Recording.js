@@ -118,7 +118,8 @@ class Recording extends Component {
         // If there aren't any recordings, grab a recording from the DB using the unique id 
         if (x.length === 0) {
             let path = this.props.location.pathname;
-            let recordingPath = path.substr(path.indexOf(".com/") + 15);
+            let recordingPath = path.substr(path.indexOf(".com/") + 14);
+            console.log(recordingPath);
             db.collection("recordings").where("title", "==", recordingPath)
             .get()
             .then(query => {
