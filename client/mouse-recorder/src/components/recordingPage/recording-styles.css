@@ -1,0 +1,50 @@
+.recordingContent {
+    display: flex;
+    margin-left: 5vw;
+    margin-top: 3vw;
+}
+
+.recordingContent div {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 2vw;
+    width: 5vw;
+    text-align: center;
+}
+
+.recording {
+    background: red;
+    color: white;
+}
+
+.play {
+    color: rgb(211,211,211);
+}
+
+#play, #record, #save {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#cursor {
+    height: 10px;
+    width: 10px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+    transition: left 1s;
+    transition: right 1s;
+}
+
+.display {
+    display: none;
+}
+
+h3 {
+    margin-left: 5%;
+}
+

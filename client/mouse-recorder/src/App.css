@@ -1,0 +1,60 @@
+.navigationBar {
+  border-top: solid black 4vh; 
+  background: rgb(50, 50, 50);
+  height: 5vh;
+  padding-left: 5vw;
+  font-size: 3vh;
+  padding-top: 3vh; 
+}
+.logo {
+  text-decoration: none;
+  color: white;
+}
+
+.content {
+  margin-left: 15vw;
+  margin-right: 15vw;
+  margin-top: 5vh;
+  /* border: 1px solid black; */ 
+}
+
+.individualRecord {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin-bottom: 2vh;
+}
+
+.viewRecording {
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 0 2vw;
+  text-decoration: none;
+  /* background: blue; */
+}
+
+.viewRecording:hover {
+  background: green;
+}
+
+.inputBar {
+  margin-left: 15vw;
+  margin-top: 5vh;
+  display: flex;
+}
+
+.input {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.create {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-left: 1vw;
+  width: 10%;
+  text-align: center;
+  padding-top: .5vh;
+  background: skyblue;
+}
