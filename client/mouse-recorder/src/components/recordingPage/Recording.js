@@ -24,7 +24,7 @@ class Recording extends Component {
         // Sets the queriedTitle, queriedXCordinates, queriedYCordinates to state 
         let path = this.props.location.pathname;
         let recordingPath = path.substr(path.indexOf("/") + 15);
-
+        
         let queriedX = [];
         let queriedY = [];
         let queriedT = "";
@@ -109,58 +109,49 @@ class Recording extends Component {
     };
 
     togglePlay = () => {
-        let qx = this.state.queriedXCoordinates;
-        let qy = this.state.queriedYCoordinates;
-        // Toggle the record button to fade away
-        let element = document.getElementById("record");
-        element.classList.add("play");
+        // Function to grab the recording by Id
+        // iterate over x cordinates array, for each item, set the x coordintate of the div to x[i]
+        let x = this.state.xCoordinates;
+        let y = this.state.yCoordinates;
         
-        // Toggle the play button to fade away
-        let playElement = document.getElementById("play");
-        playElement.classList.toggle("play");
-        
-        // Toggle the save button to fade away
-        let saveElement = document.getElementById("save");
-        saveElement.classList.toggle("play");
-        
-        // Toggle the delete button to fade away
-        let deleteElement = document.getElementById("delete");
-        deleteElement.classList.toggle("play");
-        
-        // Toggle display on red dot div in window
-        let dot = document.getElementById("cursor");
-        dot.classList.toggle("display");
-        console.log(document.getElementById("record").getBoundingClientRect().top, document.getElementById("record").getBoundingClientRect().left)
-        dot.style.left = "130px";
-        dot.style.top = "125px";
-        
-
-        // Get the Recording for DB, if any
-        let path = this.props.location.pathname;
-        let recordingPath = path.substr(path.indexOf("/") + 15);
-        let queriedX = "";
-        let queriedY = "";
-        db.collection("recordings").where("title", "==", recordingPath)
-        .get()
-        .then(query => {
-            query.forEach(function(doc) {
-                // .data() access all fields from the firebase DB. 
-                queriedX = doc.data().xCoordinates;
-                queriedY = doc.data().yCoordinates;
+        if (x.length === 0) {
+            let path = this.props.location.pathname;
+            let recordingPath = path.substr(path.indexOf("/") + 15);
+            db.collection("recordings").where("title", "==", recordingPath)
+            .get()
+            .then(query => {
+                query.forEach(function(doc) {
+                    x = doc.data().xCoordinates;
+                    y = doc.data().yCoordinates;
+                })
             })
-        })
-        .then(() => {
-            this.setState({ 
-                queriedXCoordinates: queriedX,
-                queriedYCoordinates: queriedY,
-            })})
-        .then(() => {
-            // Function to grab the recording by Id
-            // iterate over x cordinates array, for each item, set the x coordintate of the div to x[i]
-            let x = this.state.queriedXCoordinates;
-            let y = this.state.queriedYCoordinates;
+        }
+        if (x.length > 0) {
+            // Toggle the record button to fade away
+            let element = document.getElementById("record");
+            element.classList.add("play");
+            
+            // Toggle the play button to fade away
+            let playElement = document.getElementById("play");
+            playElement.classList.toggle("play");
+            
+            // Toggle the save button to fade away
+            let saveElement = document.getElementById("save");
+            saveElement.classList.toggle("play");
+            
+            // Toggle the delete button to fade away
+            let deleteElement = document.getElementById("delete");
+            deleteElement.classList.toggle("play");
+            
+            // Toggle display on red dot div in window
+            let dot = document.getElementById("cursor");
+            dot.classList.toggle("display");
+            console.log(document.getElementById("record").getBoundingClientRect().top, document.getElementById("record").getBoundingClientRect().left)
+            dot.style.left = "130px";
+            dot.style.top = "125px";
             let i = 0;
             let positionChange = setInterval(function() {
+                
                 dot.style.left = x[i] + "px";
                 dot.style.top = y[i] + "px";
                 i++;
@@ -174,9 +165,7 @@ class Recording extends Component {
                     dot.classList.toggle("display");
                 }
             }, 10)
-
-        })
-
+        }
     }
 
     saveRecording = () => {

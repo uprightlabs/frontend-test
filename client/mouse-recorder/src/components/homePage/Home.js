@@ -43,6 +43,15 @@ class Home extends Component {
     .catch(err => console.log(err))
   }
 
+  inputValidation = (e) => {
+    if(this.state.recordingTitle.includes(" ")) {
+      alert("please do not use spaces");
+      this.setState({ [e.target.name]: "" })
+    } else {
+      this.setState({ [e.target.name]: e.target.value })
+    }
+  }
+
   createRecording = () => {
     let recordingTitle = this.state.recordingTitle;
         db.collection("recordings").doc(`${recordingTitle}`).set({
@@ -76,7 +85,7 @@ class Home extends Component {
             placeholder="Recording Name"
             name="recordingTitle"
             value={this.state.recordingTitle}
-            onChange={e => this.setState({ [e.target.name]: e.target.value })}
+            onChange={e => this.inputValidation(e)}
           />
           <div className="create" onClick={() => this.createRecording()}><Link to={`/viewRecording/${this.state.recordingTitle}`}>Create</Link></div>
         </div>
