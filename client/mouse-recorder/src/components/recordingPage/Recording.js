@@ -118,7 +118,7 @@ class Recording extends Component {
         // If there aren't any recordings, grab a recording from the DB using the unique id 
         if (x.length === 0) {
             let path = this.props.location.pathname;
-            let recordingPath = path.substr(path.indexOf("https://upright-labs.firebaseapp.com/viewRecording/") + 14);
+            let recordingPath = path.split("viewRecording/")[1];
             console.log(recordingPath);
             db.collection("recordings").where("title", "==", recordingPath)
             .get()
